@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+  background-size: 400% 400%;
+  animation: fondo 10s ease infinite;
+}
+
+@keyframes fondo {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.container {
+  background: rgba(255,255,255,0.92);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 320px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #ff2e55;
+}
+
+.carta {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s ease;
+  pointer-events: none;
+  display: none;
+}
+
+.carta.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  display: block;
+}
+
+.heart {
+  position: absolute;
+  color: rgba(255, 0, 80, 0.7);
+  animation: float 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="pantallaInicio" class="container">
+  <h1>💌 Tengo algo para ti</h1>
+  <button onclick="abrirCarta()">Abrir carta</button>
+</div>
+
+<div id="carta" class="container carta">
+  <h2>Para mi persona favorita ❤️</h2>
+  <p id="texto"></p>
+</div>
+
+<audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function abrirCarta() {
+
+  const carta = document.getElementById("carta");
+  const inicio = document.getElementById("pantallaInicio");
+  const texto = document.getElementById("texto");
+  const musica = document.getElementById("musica");
+
+  inicio.style.display = "none";
+
+  carta.style.display = "block";
+
+  setTimeout(() => {
+    carta.classList.add("mostrar");
+  }, 50);
+
+  if (musica) {
+    musica.volume = 0.4;
+    musica.play().catch(() => {});
+  }
+
+  const mensaje =
+`Esto no es solo una página web.
+
+Es la carta que tanta ilusión te hacia tener.
+Quiero decirte que cada día a tu lado es un regalo, y aunque a veces no lo diga, te amo con todo mi corazón.
+Haces que mis dias grises se llenen de color, y mis momentos tristes se conviertan en recuerdos felices.
+Eres mi compañero, mi amigo, mi confidente,y mi amor. No puedo imaginar mi vida sin ti, y cada día agradezco al universo por haberte encontrado.    
+No soy muy buena con las palabras, pero quiero que sepas que te amo más de lo que las palabras pueden expresar. Eres mi todo, y siempre lo serás.
+Por eso te doy esta pequeña sorpresa, para recordarte lo mucho que significas para mi y lo agradecida que estoy de tenerte en mi vida.
+Aunque admito que esto me ha costado horrores hacerlo, espero que te guste y que sepas que lo hice con todo mi amor y cariño.
+
+Gracias por estar en mi vida ❤️`;
+
+  let i = 0;
+  texto.innerHTML = "";
+
+  function escribir() {
+    if (i < mensaje.length) {
+      texto.innerHTML += mensaje[i] === "\n" ? "<br>" : mensaje[i];
+      i++;
+      setTimeout(escribir, 35);
+    }
+  }
+
+  escribir();
+}
+
+function crearCorazon() {
+
+  const heart = document.createElement("div");
+
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 10 + "px";
+  heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(crearCorazon, 250);
+</script>
+
+</body>
+</html>
